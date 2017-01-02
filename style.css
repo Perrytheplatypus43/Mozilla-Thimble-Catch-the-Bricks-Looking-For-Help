@@ -1,0 +1,62 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow:hidden;
+}
+   
+.bigcanvas {
+  background: #000;
+  position: static;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  position: absolute;
+  z-index: 10;
+  left: 10px;
+  top:10px;
+}
+
+.points {
+  border-radius: 5px;
+  border: 1px solid red;
+  color: red;
+  padding: 5px;
+  margin: 10px;
+  min-width: 40px;
+  background-color: yellow;  
+  text-align: left;
+}
+
+.startButton {
+  display: block;
+  width: calc(100% - 20px);
+  border-radius: 5px;
+  border: 1px solid greenyellow;
+  color: #6545D2;
+  padding: 5px;
+  margin: 10px;
+  min-width: 40px;
+  background-color: greenyellow;  
+}
+
+.pauseResumeButton {
+  display: block;
+  width: calc(100% - 20px);
+  border-radius: 5px;
+  border: 1px solid #00CCFA;
+  color: #2C08A4;
+  padding: 5px;
+  margin: 10px;
+  min-width: 40px;
+  background-color: #00CCFA;  
+}
+
+.currentScore {
+  width: 500px;
+}
