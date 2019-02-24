@@ -14,7 +14,7 @@ var GAME_OVER = "Game Over !!!";
 var points;
 var falling;
 var catcher;
-var startTime;
+var startTime = Date.now();
 var anymationFrameId;
 var isRunning;
 
@@ -96,7 +96,7 @@ function fallingBricks(count) {
     this.bricks[i] = new fallingBrick();
   }
   this.move = () => {
-    for(var i = 0; i < count; i++) {
+    for(var i = 0; i < this.bricks.length; i++) {
       var b = this.bricks[i];
       b.move();
       if (b.isHit(catcher)) {
@@ -109,19 +109,21 @@ function fallingBricks(count) {
     }
   };
   this.draw = () => {
-    for(var i = 0; i < count; i++) {
+    for(var i = 0; i < this.bricks.length; i++) {
       this.bricks[i].draw();
     }
   };
-
+  this.addOne = () => {
+    this.bricks.push(fallingBrick());
+  };
 }
 
 function getCurrentScore() {
-  return 'Score: ' + Math.floor((Date.now() - startTime)/1000);
+  return Math.floor((Date.now() - startTime)/1000);
 }
            
 function draw() {
-  var currentScore = getCurrentScore();
+  var currentScore = 'Score: ' + getCurrentScore();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   falling.move();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -129,6 +131,9 @@ function draw() {
   catcher.draw();
   document.getElementById('points').textContent = 'Points: ' + points;  
   document.getElementById('startTime').textContent = currentScore;
+  if (getCurrentScore() % 10 == 9) {
+    falling.addOne();
+  }
   if (points > 0) { 
     resumeGame();
   } else {
