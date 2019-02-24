@@ -122,7 +122,6 @@ function getCurrentScore() {
            
 function draw() {
   var currentScore = getCurrentScore();
-  pauseGame();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   falling.move();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
