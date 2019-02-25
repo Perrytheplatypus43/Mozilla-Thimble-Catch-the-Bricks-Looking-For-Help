@@ -19,23 +19,30 @@ var anymationFrameId;
 var isRunning;
 
 function startGame() {
+  window.cancelAnimationFrame(anymationFrameId);
   points = START_POINTS;
   falling = new fallingBricks(FALLING_BRICKS_COUNT);
   catcher = catcherBrick();
   startTime = Date.now();
   document.getElementById('startButton').textContent = 'Restart';
-  resumeGame();
+  isRunning = true;
+  anymationFrameId = window.requestAnimationFrame(gameLoop);
 }
 
+function gameLoop() {
+    if(isRunning) {
+        falling.move();
+        draw();
+    }
+    anymationFrameId = window.requestAnimationFrame(gameLoop);
+}
 
 function resumeGame() {
   isRunning = true;
-  anymationFrameId = window.requestAnimationFrame(draw);
 }
 
 function pauseGame() {
   isRunning = false;
-  window.cancelAnimationFrame(anymationFrameId);
 }
 
 function pauseResumeGame() {
@@ -55,9 +62,9 @@ function fallingBrick () {
     0,
     Math.ceil(3 + Math.random() * 9)/2);
 }
-       
+
 function catcherBrick () {
-  return new brick(                               
+  return new brick(
     (canvas.width - BRICK_WIDTH) / 2,
     canvas.height - BRICK_HEIGHT,
     "#f00",
@@ -75,7 +82,7 @@ function brick (x, y, c, dx, dy) {
   this.moveBy = (dx, dy) => {
     this.x += dx;
     this.y += dy;
-    this.x = Math.min(canvas.width - BRICK_WIDTH, 
+    this.x = Math.min(canvas.width - BRICK_WIDTH,
                        Math.max(0, this.x ));
     this.isOffScreen = this.y > canvas.height;
   };
@@ -119,20 +126,16 @@ function fallingBricks(count) {
 function getCurrentScore() {
   return 'Score: ' + Math.floor((Date.now() - startTime)/1000);
 }
-           
+
 function draw() {
   var currentScore = getCurrentScore();
-  pauseGame();
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  falling.move();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   falling.draw();
   catcher.draw();
-  document.getElementById('points').textContent = 'Points: ' + points;  
+  document.getElementById('points').textContent = 'Points: ' + points;
   document.getElementById('startTime').textContent = currentScore;
-  if (points > 0) { 
-    resumeGame();
-  } else {
+  if (points < 1) {
+    pauseGame();
     gameOver(currentScore);
   }
 }
@@ -147,10 +150,10 @@ function gameOver(currentScore) {debugger;
   var size = maxWidth / mesure.width * base;
   ctx.font="100px san serif";
   ctx.fillStyle = '#00FF11';
-  ctx.fillText(currentScore, canvas.width / 2 - 200, canvas.height / 2 - size / 3 + 165); 
+  ctx.fillText(currentScore, canvas.width / 2 - 200, canvas.height / 2 - size / 3 + 165);
   ctx.fillStyle = '#00C9FF';
-  ctx.font = size + "px san serif";                               
-  ctx.fillText(GAME_OVER, canvas.width / 2 - maxWidth / 2, canvas.height / 2 + size / 3 - 170); 
+  ctx.font = size + "px san serif";
+  ctx.fillText(GAME_OVER, canvas.width / 2 - maxWidth / 2, canvas.height / 2 + size / 3 - 170);
 }
 
 document.addEventListener('keydown', e => {
@@ -178,5 +181,3 @@ document.getElementById('canvas').addEventListener('click', e => {
   }
   e.preventDefault();
 });
-
-
