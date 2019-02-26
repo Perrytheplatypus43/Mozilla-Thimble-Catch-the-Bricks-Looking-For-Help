@@ -15,7 +15,6 @@ var points;
 var falling;
 var catcher;
 var startTime = Date.now();
-var lastDificultyChangeTime = Date.now();
 var anymationFrameId;
 var isRunning;
 
@@ -33,13 +32,11 @@ function gameLoop() {
   window.cancelAnimationFrame(anymationFrameId);
   if(isRunning) {
     var currentScore = getCurrentScore();
-    var difficultyTimer = getDifficultyTimer();
     falling.move();
     draw(currentScore);
     // TODO: Make this smarter.
-    if (Date.now() - lastDificultyChangeTime  > 10000) {
+    if (getCurrentScore() % 1001 == 1000) {
       falling.addOne();
-      lastDificultyChangeTime = Date.now();
     }
     if (points > 0) { 
       resumeGame();
@@ -139,9 +136,6 @@ function fallingBricks(count) {
 }
 
 function getCurrentScore() {
-  return Math.floor((Date.now() - startTime)/1000);
-}
-function getDifficultyTimer() {
   return Math.floor((Date.now() - startTime)/1000);
 }
 
