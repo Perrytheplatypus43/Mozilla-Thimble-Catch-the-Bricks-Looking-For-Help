@@ -14,27 +14,36 @@ var GAME_OVER = "Game Over !!!";
 var points;
 var falling;
 var catcher;
-var startTime;
+var startTime = Date.now();
 var anymationFrameId;
 var isRunning;
 
 function startGame() {
-  window.cancelAnimationFrame(anymationFrameId);
   points = START_POINTS;
   falling = new fallingBricks(FALLING_BRICKS_COUNT);
   catcher = catcherBrick();
   startTime = Date.now();
   document.getElementById('startButton').textContent = 'Restart';
-  isRunning = true;
-  anymationFrameId = window.requestAnimationFrame(gameLoop);
+  resumeGame();
+  gameLoop();
 }
 
 function gameLoop() {
-    if(isRunning) {
-        falling.move();
-        draw();
+  window.cancelAnimationFrame(anymationFrameId);
+  if(isRunning) {
+    var currentScore = getCurrentScore();
+    falling.move();
+    draw(currentScore);
+    if (getCurrentScore() % 1001 == 1000) {
+      falling.addOne();
+    }
+    if (points > 0) { 
+      resumeGame();
+    } else {
+      gameOver("Score: " + currentScore);
     }
     anymationFrameId = window.requestAnimationFrame(gameLoop);
+  }
 }
 
 function resumeGame() {
@@ -48,7 +57,7 @@ function pauseGame() {
 function pauseResumeGame() {
   if (isRunning) {
     pauseGame();
-  }  else {
+  } else {
     resumeGame();
   }
   document.getElementById('pauseResumeButton').textContent = isRunning ?  'Pause' : 'Resume';
@@ -60,7 +69,7 @@ function fallingBrick () {
     0,
     COLORS[Math.ceil(Math.random() * COLORS.length) - 1],
     0,
-    Math.ceil(3 + Math.random() * 9)/2);
+    Math.ceil(3 + Math.random() * 9)/3.5);
 }
 
 function catcherBrick () {
@@ -83,7 +92,7 @@ function brick (x, y, c, dx, dy) {
     this.x += dx;
     this.y += dy;
     this.x = Math.min(canvas.width - BRICK_WIDTH,
-                       Math.max(0, this.x ));
+                      Math.max(0, this.x ));
     this.isOffScreen = this.y > canvas.height;
   };
   this.draw = () => {
@@ -103,7 +112,7 @@ function fallingBricks(count) {
     this.bricks[i] = new fallingBrick();
   }
   this.move = () => {
-    for(var i = 0; i < count; i++) {
+    for(var i = 0; i < this.bricks.length; i++) {
       var b = this.bricks[i];
       b.move();
       if (b.isHit(catcher)) {
@@ -116,31 +125,31 @@ function fallingBricks(count) {
     }
   };
   this.draw = () => {
-    for(var i = 0; i < count; i++) {
+    for(var i = 0; i < this.bricks.length; i++) {
       this.bricks[i].draw();
     }
   };
-
+  this.addOne = () => {
+    this.bricks.push(fallingBrick());
+  };
 }
 
 function getCurrentScore() {
-  return 'Score: ' + Math.floor((Date.now() - startTime)/1000);
+  return Math.floor((Date.now() - startTime)/1000);
 }
 
-function draw() {
-  var currentScore = getCurrentScore();
+function draw(currentScore) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  falling.move();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   falling.draw();
   catcher.draw();
   document.getElementById('points').textContent = 'Points: ' + points;
-  document.getElementById('startTime').textContent = currentScore;
-  if (points < 1) {
-    pauseGame();
-    gameOver(currentScore);
-  }
+  document.getElementById('startTime').textContent = 'Score: ' + currentScore;
 }
 
-function gameOver(currentScore) {debugger;
+function gameOver(currentScore) {
+  pauseGame();
   var base = 100;
   ctx.font = base + "px san serif";
   ctx.fillStyle = '#00C9FF';
@@ -167,7 +176,7 @@ document.addEventListener('keydown', e => {
     default:
       console.log(e.keyCode);
       break;
-  }
+                   }
 });
 
 document.getElementById('startButton').addEventListener('click', startGame);
