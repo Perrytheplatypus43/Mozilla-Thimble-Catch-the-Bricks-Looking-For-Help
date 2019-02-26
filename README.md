@@ -6,10 +6,7 @@ The goal of the game is the catch the red bricks as you avoid the colored bricks
 <h3>Play v1.1 it here:</h3> 
 https://thimbleprojects.org/platypus123/67111/
 
-<h4>Play v1.2 (unstable) here. (dont play this one):</h4>
-https://thimbleprojects.org/platypus123/642678
-
-<h4>Play v1.2.1 (unstable) here. (dont play this one):</h4>
+<h3>Play v1.2.2 here:</h4>
 https://thimbleprojects.org/platypus123/643647/
 
 <h2>Changelog:</h2>
