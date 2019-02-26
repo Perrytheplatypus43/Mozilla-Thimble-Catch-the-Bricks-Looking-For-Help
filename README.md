@@ -25,3 +25,4 @@ https://thimbleprojects.org/platypus123/643647/
 <p><h3>2.</h3></p><p>Add art for the bricks using vanilla js.</p>
 <p><h3>3.</h3></p><p>Add art for the brick catcher using vanilla js.</p>
 <p><h3>4.</h3></p><p>Add a how to play to the start of the game.<p/>
+<p>Credit: DmMacniel (https://www.reddit.com/user/DmMacniel)</p>
