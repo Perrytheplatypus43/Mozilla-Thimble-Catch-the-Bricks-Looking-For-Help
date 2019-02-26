@@ -17,10 +17,11 @@ https://thimbleprojects.org/platypus123/643647/
 <p>v1.2: Developing the difficulty to get harder as you go.</p>
 
 <p><h2>What to Work On?</h2></p>
-<p>Instead of having an event listener only on keyDown, you should have a keyUp listener too and store the currenty pushed down button if it's left or right.</p>
+<p><h3>1.</h3>Instead of having an event listener only on keyDown, you should have a keyUp listener too and store the currenty pushed down button if it's left or right.</p>
 
 <p>So when you push down the left/right button, the movement action should go till the keyUp listener deletes that stored button</p>
 
 <p>This will prevent the movement delay after pressing down the button.</p>
 
 <p>Credit: SyreiX (https://www.reddit.com/user/SyreiX)</p>
+<p><h3>2.</h3>Make it so that the if statment(next to the TODO) in the canary branch that creates more bricks is smarter and stops creating biricks after a certain amount of time.</p>
