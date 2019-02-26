@@ -34,6 +34,7 @@ function gameLoop() {
     var currentScore = getCurrentScore();
     falling.move();
     draw(currentScore);
+    // TODO: Make this smarter.
     if (getCurrentScore() % 1001 == 1000) {
       falling.addOne();
     }
@@ -42,8 +43,8 @@ function gameLoop() {
     } else {
       gameOver("Score: " + currentScore);
     }
-    anymationFrameId = window.requestAnimationFrame(gameLoop);
   }
+  anymationFrameId = window.requestAnimationFrame(gameLoop);
 }
 
 function resumeGame() {
