@@ -14,7 +14,8 @@ var GAME_OVER = "Game Over !!!";
 var points;
 var falling;
 var catcher;
-var startTime;
+var startTime = Date.now();
+var lastDificultyChangeTime = Date.now();
 var anymationFrameId;
 var isRunning;
 
@@ -25,23 +26,42 @@ function startGame() {
   startTime = Date.now();
   document.getElementById('startButton').textContent = 'Restart';
   resumeGame();
+  gameLoop();
 }
 
+function gameLoop() {
+  window.cancelAnimationFrame(anymationFrameId);
+  if(isRunning) {
+    var currentScore = getCurrentScore();
+    var difficultyTimer = getDifficultyTimer();
+    falling.move();
+    draw(currentScore);
+    // TODO: Make this smarter.
+    if (Date.now() - lastDificultyChangeTime  > 10000) {
+      falling.addOne();
+      lastDificultyChangeTime = Date.now();
+    }
+    if (points > 0) { 
+      resumeGame();
+    } else {
+      gameOver("Score: " + currentScore);
+    }
+  }
+  anymationFrameId = window.requestAnimationFrame(gameLoop);
+}
 
 function resumeGame() {
   isRunning = true;
-  anymationFrameId = window.requestAnimationFrame(draw);
 }
 
 function pauseGame() {
   isRunning = false;
-  window.cancelAnimationFrame(anymationFrameId);
 }
 
 function pauseResumeGame() {
   if (isRunning) {
     pauseGame();
-  }  else {
+  } else {
     resumeGame();
   }
   document.getElementById('pauseResumeButton').textContent = isRunning ?  'Pause' : 'Resume';
@@ -53,11 +73,11 @@ function fallingBrick () {
     0,
     COLORS[Math.ceil(Math.random() * COLORS.length) - 1],
     0,
-    Math.ceil(3 + Math.random() * 9)/2);
+    Math.ceil(3 + Math.random() * 9)/3.5);
 }
-       
+
 function catcherBrick () {
-  return new brick(                               
+  return new brick(
     (canvas.width - BRICK_WIDTH) / 2,
     canvas.height - BRICK_HEIGHT,
     "#f00",
@@ -75,8 +95,8 @@ function brick (x, y, c, dx, dy) {
   this.moveBy = (dx, dy) => {
     this.x += dx;
     this.y += dy;
-    this.x = Math.min(canvas.width - BRICK_WIDTH, 
-                       Math.max(0, this.x ));
+    this.x = Math.min(canvas.width - BRICK_WIDTH,
+                      Math.max(0, this.x ));
     this.isOffScreen = this.y > canvas.height;
   };
   this.draw = () => {
@@ -96,7 +116,7 @@ function fallingBricks(count) {
     this.bricks[i] = new fallingBrick();
   }
   this.move = () => {
-    for(var i = 0; i < count; i++) {
+    for(var i = 0; i < this.bricks.length; i++) {
       var b = this.bricks[i];
       b.move();
       if (b.isHit(catcher)) {
@@ -109,35 +129,34 @@ function fallingBricks(count) {
     }
   };
   this.draw = () => {
-    for(var i = 0; i < count; i++) {
+    for(var i = 0; i < this.bricks.length; i++) {
       this.bricks[i].draw();
     }
   };
-
+  this.addOne = () => {
+    this.bricks.push(fallingBrick());
+  };
 }
 
 function getCurrentScore() {
-  return 'Score: ' + Math.floor((Date.now() - startTime)/1000);
+  return Math.floor((Date.now() - startTime)/1000);
 }
-           
-function draw() {
-  var currentScore = getCurrentScore();
-  pauseGame();
+function getDifficultyTimer() {
+  return Math.floor((Date.now() - startTime)/1000);
+}
+
+function draw(currentScore) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   falling.move();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   falling.draw();
   catcher.draw();
-  document.getElementById('points').textContent = 'Points: ' + points;  
-  document.getElementById('startTime').textContent = currentScore;
-  if (points > 0) { 
-    resumeGame();
-  } else {
-    gameOver(currentScore);
-  }
+  document.getElementById('points').textContent = 'Points: ' + points;
+  document.getElementById('startTime').textContent = 'Score: ' + currentScore;
 }
 
-function gameOver(currentScore) {debugger;
+function gameOver(currentScore) {
+  pauseGame();
   var base = 100;
   ctx.font = base + "px san serif";
   ctx.fillStyle = '#00C9FF';
@@ -147,10 +166,10 @@ function gameOver(currentScore) {debugger;
   var size = maxWidth / mesure.width * base;
   ctx.font="100px san serif";
   ctx.fillStyle = '#00FF11';
-  ctx.fillText(currentScore, canvas.width / 2 - 200, canvas.height / 2 - size / 3 + 165); 
+  ctx.fillText(currentScore, canvas.width / 2 - 200, canvas.height / 2 - size / 3 + 165);
   ctx.fillStyle = '#00C9FF';
-  ctx.font = size + "px san serif";                               
-  ctx.fillText(GAME_OVER, canvas.width / 2 - maxWidth / 2, canvas.height / 2 + size / 3 - 170); 
+  ctx.font = size + "px san serif";
+  ctx.fillText(GAME_OVER, canvas.width / 2 - maxWidth / 2, canvas.height / 2 + size / 3 - 170);
 }
 
 document.addEventListener('keydown', e => {
@@ -164,7 +183,7 @@ document.addEventListener('keydown', e => {
     default:
       console.log(e.keyCode);
       break;
-  }
+                   }
 });
 
 document.getElementById('startButton').addEventListener('click', startGame);
@@ -178,5 +197,3 @@ document.getElementById('canvas').addEventListener('click', e => {
   }
   e.preventDefault();
 });
-
-
