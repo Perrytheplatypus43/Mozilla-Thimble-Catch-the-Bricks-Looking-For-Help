@@ -3,13 +3,14 @@ This is a game developed by one person seeking help for development.
 The goal of the game is the catch the red bricks as you avoid the colored bricks.
 
 <p><h1>Links to The Game:</h1></p>
-<h3>Play v1.1 it here:</h3> 
+<h3>Play v1.1 here:</h3> 
 https://thimbleprojects.org/platypus123/67111/
 
 <h3>Play v1.2.2 here:</h4>
 https://thimbleprojects.org/platypus123/643647/
 
 <h2>Changelog:</h2>
+<p>v1.2.2 Game gets harder as you go</p>
 <p>v1.2.1: Adding a "game-loop"</p>
 <p>v1.2: Developing the difficulty to get harder as you go.</p>
 
