@@ -22,3 +22,4 @@ https://thimbleprojects.org/platypus123/643647/
 <p>This will prevent the movement delay after pressing down the button.</p>
 
 <p>Credit: SyreiX (https://www.reddit.com/user/SyreiX)</p>
+<p><h3>2.</h3></p><p>Add art for the bricks.</p>
