@@ -10,4 +10,5 @@ https://thimbleprojects.org/platypus123/642678
 
 Changelog:
 v1.2.1: Adding a "game-loop"
+
 v1.2: Developing the difficulty to get harder as you go.
