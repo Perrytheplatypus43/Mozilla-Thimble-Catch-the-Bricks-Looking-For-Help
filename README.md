@@ -22,4 +22,3 @@ https://thimbleprojects.org/platypus123/643647/
 <p>This will prevent the movement delay after pressing down the button.</p>
 
 <p>Credit: SyreiX (https://www.reddit.com/user/SyreiX)</p>
-<p><h3>2.</h3>Make it so that the if statment(next to the TODO) in the canary branch that creates more bricks is smarter and stops creating biricks after a certain amount of time.</p>
