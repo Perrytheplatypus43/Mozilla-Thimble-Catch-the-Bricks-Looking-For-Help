@@ -23,4 +23,4 @@ https://thimbleprojects.org/platypus123/643647/
 
 <p>This will prevent the movement delay after pressing down the button.</p>
 
-<p>Credit: SyreiX</p>
+<p>Credit: SyreiX (https://www.reddit.com/user/SyreiX)</p>
