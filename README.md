@@ -9,7 +9,11 @@ https://thimbleprojects.org/platypus123/67111/
 <h3>Play v1.2.2 here:</h4>
 https://thimbleprojects.org/platypus123/643647/
 
+<h3>Play v1.3 here:</h4>
+https://thimbleprojects.org/platypus123/645157
+
 <h2>Changelog:</h2>
+<p>v1.3: The bricks now have a 3D look</p>
 <p>v1.2.2: Game gets harder as you go</p>
 <p>v1.2.1: Adding a "game-loop"</p>
 <p>v1.2: Developing the difficulty to get harder as you go.</p>
@@ -22,4 +26,7 @@ https://thimbleprojects.org/platypus123/643647/
 <p>This will prevent the movement delay after pressing down the button.</p>
 
 <p>Credit: SyreiX (https://www.reddit.com/user/SyreiX)</p>
-<p><h3>2.</h3></p><p>Add art for the bricks.</p>
+<p><h3>2.</h3></p><p>Add art for the bricks using vanilla js.</p>
+<p><h3>3.</h3></p><p>Add art for the brick catcher using vanilla js.</p>
+<p><h3>4.</h3></p><p>Add a how to play to the start of the game.<p/>
+<p>Credit: DmMacniel (https://www.reddit.com/user/DmMacniel)</p>
