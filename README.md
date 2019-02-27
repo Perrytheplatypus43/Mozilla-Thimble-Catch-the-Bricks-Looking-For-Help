@@ -9,7 +9,11 @@ https://thimbleprojects.org/platypus123/67111/
 <h3>Play v1.2.2 here:</h4>
 https://thimbleprojects.org/platypus123/643647/
 
+<h3>Play v1.3 here:</h4>
+https://thimbleprojects.org/platypus123/645157
+
 <h2>Changelog:</h2>
+<p>v1.3: The bricks now have a 3D look</p>
 <p>v1.2.2: Game gets harder as you go</p>
 <p>v1.2.1: Adding a "game-loop"</p>
 <p>v1.2: Developing the difficulty to get harder as you go.</p>
