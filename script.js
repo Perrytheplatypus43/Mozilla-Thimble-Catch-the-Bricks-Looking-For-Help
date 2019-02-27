@@ -41,7 +41,7 @@ function gameLoop() {
       falling.addOne();
       lastDificultyChangeTime = Date.now();
     }
-    if (points > 0) { 
+    if (points > 0) {
       resumeGame();
     } else {
       gameOver("Score: " + currentScore);
@@ -101,10 +101,22 @@ function brick (x, y, c, dx, dy) {
   };
   this.draw = () => {
     ctx.beginPath();
-    ctx.rect(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
     ctx.fillStyle = this.c;
-    ctx.fill();
-    ctx.closePath();
+    ctx.fillRect(this.x, this.y, BRICK_WIDTH, BRICK_HEIGHT);
+    /* 3D look on bricks */
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+    ctx.beginPath();
+    ctx.moveTo(this.x + 1, this.y + BRICK_HEIGHT - 1);
+    ctx.lineTo(this.x + 1, this.y + 1);
+    ctx.lineTo(this.x + BRICK_WIDTH - 1, this.y + 1);
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.beginPath();
+    ctx.moveTo(this.x + BRICK_WIDTH - 1, this.y + 1);
+    ctx.lineTo(this.x + BRICK_WIDTH - 1, this.y + BRICK_HEIGHT - 1);
+    ctx.lineTo(this.x + 1, this.y + BRICK_HEIGHT - 1);
+    ctx.stroke();
   };
   this.isHit = another => Math.abs(this.x - another.x) < BRICK_WIDTH &&
     Math.abs(this.y - another.y) < BRICK_HEIGHT;
